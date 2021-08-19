@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+
+      <h1 class="text-white">CoinMarket</h1>
+
+      <input type="text"
+        (keyup)="searchCoin()"
+        [(ngModel)]="searchText"
+        placeholder="Search coin for name or symbol"
+        class="form-control bg-dark text-light border-0 my-4 text-center rounded-0">
+
+      <table class="table table-dark" *ngIf="resultCoins.length > 0; else showLoading">
+        <thead>
+          <tr>
+            <th *ngFor="let title of titles">{{ title }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let coin of resultCoins; let i = index">
+            <td class="text-muted">{{ i + 1 }}</td>
+            <td>
+              <img [src]="coin.image" alt="{{coin.name}}" class="coin-image">
+              <span class="ms-3">{{ coin.name}}</span>
+              <span class="text-muted text-uppercase ms-2">{{ coin.symbol}}</span>
+            </td>
+            <td>{{coin.current_price.toLocaleString()}} €</td>
+            <td [ngClass]="coin.price_change_percentage_24h > 0 ? 'text-success' : 'text-danger'">
+              {{coin.price_change_percentage_24h.toLocaleString()}} €
+            </td>
+            <td>{{coin.total_volume.toLocaleString()}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ng-template #showLoading>
+        <div class="d-flex justify-content-center align-items-center">
+          <div class="spinner-border text-light spinner-loading" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
